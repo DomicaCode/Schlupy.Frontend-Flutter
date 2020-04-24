@@ -1,5 +1,3 @@
-# schlupyfrontend
-
 Schlupy mobile frontend
 
 ## Getting Started
