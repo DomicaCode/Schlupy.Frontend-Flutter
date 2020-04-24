@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'services/register_service.dart';
+import 'dart:developer';
 
 class RegisterForm extends StatefulWidget{
   @override
@@ -13,6 +14,8 @@ class RegisterFormState extends State<RegisterForm>{
   String _username;
   String _email;
   String _password;
+
+  String _response;
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -31,16 +34,30 @@ Widget _buildUsername(){
     }
   );
 }
+
+Widget _buildMessage(){
+  if(_response == null){
+    return Text(
+      ""
+    );
+  }else{
+    return Text(
+      _response
+    );
+  }
+
+}
+
 Widget _buildEmail(){
   return TextFormField(
       decoration: InputDecoration(
           labelText: 'Email'
       ),
-      validator: (String value){
-        if(value.isEmpty){
-          return "Email is required";
-        }
-      },
+      //validator: (String value){
+      //  if(value.isEmpty){
+      //    return "Email is required";
+     //   }
+   //   },
       onSaved: (String value){
         _email = value;
       }
@@ -75,6 +92,7 @@ Widget _buildPassword(){
             _buildUsername(),
             _buildEmail(),
             _buildPassword(),
+            _buildMessage(),
             SizedBox(height:25),
             RaisedButton(
               child:Text("Submit", style:TextStyle(
@@ -82,15 +100,7 @@ Widget _buildPassword(){
                 ),
               ),
               onPressed: () async  {
-                if(!_formKey.currentState.validate()){
-                  return;
-                }
-                _formKey.currentState.save();
-
-                var registerService = new RegisterService();
-
-                await registerService.register(_username, _password, _email);
-                print(_username);
+                await register();
               },
             )
           ],
@@ -99,7 +109,18 @@ Widget _buildPassword(){
     );
   }
 
-  signIn(String username, String password){
+  register() async{
+    if(!_formKey.currentState.validate()){
+      return;
+    }
+    _formKey.currentState.save();
 
+    var registerService = new RegisterService();
+
+    var response = await registerService.register(_username, _password, _email);
+
+    print(response);
+
+    setState(() { _response =  response; });
   }
 }
