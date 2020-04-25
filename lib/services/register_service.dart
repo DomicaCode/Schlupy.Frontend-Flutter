@@ -1,27 +1,23 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
+import 'package:schlupyfrontend/api/api_base_helper.dart';
 
 class RegisterService {
 
   Future<String> register(String username, String password, String email) async{
 
-    debugger();
+    var _helper = ApiBaseHelper();
 
     var body = jsonEncode(<String, String>{
       "username": username,
       "password": password,
       "email":email
     });
-    print(body);
 
-    var response =  await http.post(
-      "http://api.domica.site/api/user/register",
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      body: body
-    );
-    return response.body;
+    final response = await _helper.post("http://api.domica.site/api/user/register",body);
+
+    debugger();
+    return response.toString();
   }
 }
