@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'register_form.dart';
+
+import 'package:schlupyfrontend/utils/router.dart';
+import 'utils/styles.dart';
+import 'views/pages/unknown_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,10 +13,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context){
     return MaterialApp(
       title:'Schlupy frontend',
+      debugShowCheckedModeBanner: false,
       theme:ThemeData(
-        primarySwatch: Colors.teal
+        primaryColor: Styles.appPrimaryColor,
+        accentColor: Styles.appAccentColor,
+        brightness: Brightness.light,
+
+        // for drawer color
+        canvasColor: Styles.appCanvasColor,
+
+        fontFamily: 'Montserrat',
+
+        textTheme: Styles.appTextTheme,
       ),
-      home: RegisterForm(),
+      initialRoute: '/',
+      routes: appRoutes,
+      onUnknownRoute: (RouteSettings settings) {
+        return MaterialPageRoute(
+          builder: (BuildContext context) => UnknownPage(),
+        );
+      },
     );
   }
 }

@@ -17,7 +17,6 @@ class RegisterService {
 
     final response = await _helper.post("http://api.domica.site/api/user/register",body);
 
-    debugger();
     return response.toString();
   }
 }

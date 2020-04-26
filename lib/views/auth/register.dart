@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'services/register_service.dart';
+import '../../services/register_service.dart';
+import 'package:schlupyfrontend/views/partials/notification_text.dart';
+
 import 'dart:developer';
 
-class RegisterForm extends StatefulWidget{
+class RegisterPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return RegisterFormState();
+    return RegisterPageState();
   }
 }
 
-class RegisterFormState extends State<RegisterForm>{
+class RegisterPageState extends State<RegisterPage>{
 
   String _username;
   String _email;
@@ -36,13 +38,13 @@ Widget _buildUsername(){
 }
 
 Widget _buildMessage(){
+  debugger();
   if(_response == null){
-    return Text(
-      ""
-    );
+    return Text("");
   }else{
-    return Text(
-      _response
+    return Padding(
+      padding:EdgeInsets.only(top: 10),
+      child: NotificationText(_response)
     );
   }
 
